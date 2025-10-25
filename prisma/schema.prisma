@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Milestone {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  color       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  tasks       Task[]
+
+  @@map("milestones")
+}
+
+model Task {
+  id             String   @id @default(uuid())
+  title          String
+  description    String?
+  status         String   // 'todo' | 'in-progress' | 'todays-done' | 'weekly-done' | 'done'
+  isStuck        Boolean  @default(false)
+  stuckContent   String?
+  stuckSolution  String?
+  order          Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  milestoneId    String?
+  milestone      Milestone? @relation(fields: [milestoneId], references: [id], onDelete: SetNull)
+
+  @@map("tasks")
+  @@index([status])
+  @@index([milestoneId])
+}

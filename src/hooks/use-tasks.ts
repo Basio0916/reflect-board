@@ -1,18 +1,18 @@
 import { useCallback } from 'react';
-import { useKV } from '@github/spark/hooks';
+import { useLocalStorage } from './use-local-storage';
 import { toast } from 'sonner';
 import { Task, TaskStatus } from '@/lib/types';
-import { 
-  createTask, 
-  updateTaskStatus, 
+import {
+  createTask,
+  updateTaskStatus,
   reorderTasks,
   reorderTasksInSameColumn,
   toggleTaskStuck,
-  getTasksByStatus 
+  getTasksByStatus
 } from '@/lib/task-utils';
 
 export function useTasks() {
-  const [tasks, setTasks] = useKV<Task[]>('reflect-board-tasks', []);
+  const [tasks, setTasks] = useLocalStorage<Task[]>('reflect-board-tasks', []);
 
   const addTask = useCallback((title: string, status: TaskStatus = 'todo', description?: string, milestoneId?: string) => {
     try {

@@ -34,3 +34,5 @@ pids
 .devcontainer/
 
 .spark-workbench-id
+
+/src/generated/prisma

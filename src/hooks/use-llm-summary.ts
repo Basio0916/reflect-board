@@ -70,8 +70,18 @@ ${relatedTasksJson}
 詰まったタスクがない場合は、blockersは空配列にしてください。
 マイルストーンがある場合は、その文脈で進捗を整理してください。`;
 
-      const response = await window.spark.llm(promptText, 'gpt-4o', true);
-      const summary = JSON.parse(response) as DailySummary;
+      const response = await fetch('/api/summary', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: promptText }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate summary');
+      }
+
+      const { summary: summaryText } = await response.json();
+      const summary = JSON.parse(summaryText) as DailySummary;
       
       return summary;
     } catch (error) {
@@ -114,8 +124,18 @@ ${tasksJson}
 チーム共有に適した、簡潔で具体的な内容にしてください。
 該当する項目がない場合は、空配列にしてください。`;
 
-      const response = await window.spark.llm(promptText, 'gpt-4o', true);
-      const summary = JSON.parse(response) as WeeklySummary;
+      const response = await fetch('/api/summary', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: promptText }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate summary');
+      }
+
+      const { summary: summaryText } = await response.json();
+      const summary = JSON.parse(summaryText) as WeeklySummary;
       
       return summary;
     } catch (error) {

@@ -1,23 +1,64 @@
-# ✨ Welcome to Your Spark Template!
-You've just launched your brand-new Spark Template Codespace — everything’s fired up and ready for you to explore, build, and create with Spark!
+# ReflectBoard
 
-This template is your blank canvas. It comes with a minimal setup to help you get started quickly with Spark development.
+A Kanban-style task management application with daily and weekly reflection features, built with Next.js, Prisma, and OpenAI.
 
-🚀 What's Inside?
-- A clean, minimal Spark environment
-- Pre-configured for local development
-- Ready to scale with your ideas
-  
-🧠 What Can You Do?
+## Features
 
-Right now, this is just a starting point — the perfect place to begin building and testing your Spark applications.
+- Kanban board with 5 columns: Todo, In Progress, Today's Done, Weekly Done, Done
+- Milestone management with color coding
+- Task tracking with stuck/blocker management
+- AI-powered daily and weekly summaries using OpenAI
+- Data persistence with PostgreSQL (Neon) via Prisma
 
-🧹 Just Exploring?
-No problem! If you were just checking things out and don’t need to keep this code:
+## Tech Stack
 
-- Simply delete your Spark.
-- Everything will be cleaned up — no traces left behind.
+- **Framework**: Next.js 16 (App Router)
+- **Database**: PostgreSQL (Neon)
+- **ORM**: Prisma
+- **AI**: OpenAI API
+- **UI**: Radix UI + Tailwind CSS
+- **Language**: TypeScript
 
-📄 License For Spark Template Resources 
+## Setup
 
-The Spark Template files and resources from GitHub are licensed under the terms of the MIT license, Copyright GitHub, Inc.
+### 1. Environment Variables
+
+Copy `.env.example` to `.env` and fill in your credentials:
+
+```bash
+cp .env.example .env
+```
+
+Required environment variables:
+- `DATABASE_URL`: Your Neon PostgreSQL connection string
+- `OPENAI_API_KEY`: Your OpenAI API key
+
+### 2. Database Setup
+
+```bash
+# Generate Prisma Client
+npx prisma generate
+
+# Run migrations (when you have a valid DATABASE_URL)
+npx prisma migrate dev
+```
+
+### 3. Install Dependencies & Run
+
+```bash
+npm install
+npm run dev
+```
+
+The application will be available at `http://localhost:3000`.
+
+## Development
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npx prisma studio` - Open Prisma Studio to view/edit data
+
+## License
+
+MIT

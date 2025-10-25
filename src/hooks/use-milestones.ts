@@ -1,9 +1,9 @@
-import { useKV } from '@github/spark/hooks';
+import { useLocalStorage } from './use-local-storage';
 import { toast } from 'sonner';
 import { Milestone } from '@/lib/types';
 
 export function useMilestones() {
-  const [milestones, setMilestones] = useKV<Milestone[]>('milestones', []);
+  const [milestones, setMilestones] = useLocalStorage<Milestone[]>('milestones', []);
 
   const addMilestone = (milestone: Omit<Milestone, 'id' | 'createdAt' | 'updatedAt'>) => {
     try {
