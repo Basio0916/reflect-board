@@ -1,8 +1,10 @@
-import { KanbanBoard } from './components/KanbanBoard';
-import { MilestoneProvider } from './contexts/MilestoneContext';
+'use client'
+
+import { KanbanBoard } from '@/components/KanbanBoard';
+import { MilestoneProvider } from '@/contexts/MilestoneContext';
 import { Toaster } from 'sonner';
 
-function App() {
+export default function Home() {
   return (
     <MilestoneProvider>
       <div className="min-h-screen">
@@ -12,5 +14,3 @@ function App() {
     </MilestoneProvider>
   );
 }
-
-export default App;
