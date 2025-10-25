@@ -1,18 +1,27 @@
 import { useState, useEffect, useCallback } from 'react';
 
 export function useLocalStorage<T>(key: string, initialValue: T) {
-  const [storedValue, setStoredValue] = useState<T>(() => {
+  // 常に初期値から始めることでハイドレーションエラーを回避
+  const [storedValue, setStoredValue] = useState<T>(initialValue);
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  // クライアントサイドでマウント後にローカルストレージから読み込む
+  useEffect(() => {
     if (typeof window === 'undefined') {
-      return initialValue;
+      return;
     }
+
     try {
       const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : initialValue;
+      if (item) {
+        setStoredValue(JSON.parse(item));
+      }
     } catch (error) {
       console.error(`Error loading localStorage key "${key}":`, error);
-      return initialValue;
+    } finally {
+      setIsInitialized(true);
     }
-  });
+  }, [key]);
 
   const setValue = useCallback((value: T | ((val: T) => T)) => {
     try {
