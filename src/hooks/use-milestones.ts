@@ -52,11 +52,23 @@ export function useMilestones() {
     return (milestones || []).find((milestone) => milestone.id === id);
   };
 
+  const importMilestones = async (importedMilestones: Milestone[]) => {
+    try {
+      setMilestones(importedMilestones);
+      toast.success(`${importedMilestones.length}件のマイルストーンをインポートしました`);
+    } catch (error) {
+      console.error('Failed to import milestones:', error);
+      toast.error('マイルストーンのインポートに失敗しました');
+      throw error;
+    }
+  };
+
   return {
     milestones: milestones || [],
     addMilestone,
     updateMilestone,
     deleteMilestone,
     getMilestone,
+    importMilestones,
   };
 }

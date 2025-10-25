@@ -124,6 +124,17 @@ export function useTasks() {
     return getTasksByStatus(tasks || [], status);
   }, [tasks]);
 
+  const importTasks = useCallback(async (importedTasks: Task[]) => {
+    try {
+      setTasks(importedTasks);
+      toast.success(`${importedTasks.length}件のタスクをインポートしました`);
+    } catch (error) {
+      console.error('Failed to import tasks:', error);
+      toast.error('タスクのインポートに失敗しました');
+      throw error;
+    }
+  }, [setTasks]);
+
   return {
     tasks: tasks || [],
     addTask,
@@ -133,5 +144,6 @@ export function useTasks() {
     toggleStuck,
     bulkMoveByStatus,
     getColumnTasks,
+    importTasks,
   };
 }

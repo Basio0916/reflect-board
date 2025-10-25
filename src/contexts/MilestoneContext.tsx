@@ -8,6 +8,7 @@ interface MilestoneContextType {
   updateMilestone: (id: string, updates: Partial<Pick<Milestone, 'title' | 'description' | 'color'>>) => void;
   deleteMilestone: (id: string) => void;
   getMilestone: (id: string) => Milestone | undefined;
+  importMilestones: (importedMilestones: Milestone[]) => Promise<void>;
 }
 
 const MilestoneContext = createContext<MilestoneContextType | undefined>(undefined);

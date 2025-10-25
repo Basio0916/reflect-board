@@ -7,8 +7,9 @@ import { useMilestoneContext } from '@/contexts/MilestoneContext';
 import { KanbanColumn } from './KanbanColumn';
 import { SummaryDialog } from './SummaryDialog';
 import { MilestoneDialog } from './MilestoneDialog';
+import { ImportExportDialog } from './ImportExportDialog';
 import { Button } from '@/components/ui/button';
-import { Flag } from '@phosphor-icons/react';
+import { Flag, Database } from '@phosphor-icons/react';
 import { toast } from 'sonner';
 
 export function KanbanBoard() {
@@ -31,7 +32,7 @@ export function KanbanBoard() {
   });
 
   const [isMilestoneDialogOpen, setIsMilestoneDialogOpen] = useState(false);
-
+  const [isImportExportDialogOpen, setIsImportExportDialogOpen] = useState(false);
 
 
   const handleDrop = (e: React.DragEvent, targetStatus: TaskStatus) => {
@@ -128,14 +129,24 @@ export function KanbanBoard() {
                 カンバン式タスク管理で日次・週次の振り返りを効率的に
               </p>
             </div>
-            <Button 
-              onClick={() => setIsMilestoneDialogOpen(true)}
-              variant="outline"
-              size="sm"
-            >
-              <Flag size={16} className="mr-2" />
-              マイルストーン管理
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button 
+                onClick={() => setIsImportExportDialogOpen(true)}
+                variant="outline"
+                size="sm"
+              >
+                <Database size={16} className="mr-2" />
+                データ管理
+              </Button>
+              <Button 
+                onClick={() => setIsMilestoneDialogOpen(true)}
+                variant="outline"
+                size="sm"
+              >
+                <Flag size={16} className="mr-2" />
+                マイルストーン管理
+              </Button>
+            </div>
           </div>
         </div>
       </header>
@@ -220,6 +231,11 @@ export function KanbanBoard() {
       <MilestoneDialog
         open={isMilestoneDialogOpen}
         onOpenChange={setIsMilestoneDialogOpen}
+      />
+
+      <ImportExportDialog
+        open={isImportExportDialogOpen}
+        onOpenChange={setIsImportExportDialogOpen}
       />
     </div>
   );
