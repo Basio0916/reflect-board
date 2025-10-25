@@ -68,11 +68,11 @@ export function ImportExportDialog({ open, onOpenChange }: ImportExportDialogPro
         throw new Error('無効なデータ形式です');
       }
 
-      // マイルストーンを先にインポート
-      await importMilestones(importData.data.milestones);
+      // マイルストーンを先にインポートし、IDマッピングを取得
+      const milestoneIdMap = await importMilestones(importData.data.milestones);
 
-      // タスクをインポート
-      await importTasks(importData.data.tasks);
+      // タスクをインポート（マイルストーンIDマッピングを使用）
+      await importTasks(importData.data.tasks, milestoneIdMap);
 
       setImportResult({
         success: true,

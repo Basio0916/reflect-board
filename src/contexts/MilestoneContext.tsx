@@ -4,11 +4,12 @@ import { useMilestones } from '@/hooks/use-milestones';
 
 interface MilestoneContextType {
   milestones: Milestone[];
-  addMilestone: (milestone: Omit<Milestone, 'id' | 'createdAt' | 'updatedAt'>) => void;
-  updateMilestone: (id: string, updates: Partial<Pick<Milestone, 'title' | 'description' | 'color'>>) => void;
-  deleteMilestone: (id: string) => void;
+  isLoading: boolean;
+  addMilestone: (milestone: Omit<Milestone, 'id' | 'createdAt' | 'updatedAt'>) => Promise<void>;
+  updateMilestone: (id: string, updates: Partial<Pick<Milestone, 'title' | 'description' | 'color'>>) => Promise<void>;
+  deleteMilestone: (id: string) => Promise<void>;
   getMilestone: (id: string) => Milestone | undefined;
-  importMilestones: (importedMilestones: Milestone[]) => Promise<void>;
+  importMilestones: (importedMilestones: Milestone[]) => Promise<Map<string, string>>;
 }
 
 const MilestoneContext = createContext<MilestoneContextType | undefined>(undefined);
