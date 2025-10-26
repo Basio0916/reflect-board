@@ -23,7 +23,34 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { title, description, status, milestoneId } = body;
+    const { 
+      title, 
+      description, 
+      status, 
+      milestoneId, 
+      order,
+      isStuck,
+      stuckContent,
+      stuckSolution,
+      createdAt,
+      updatedAt
+    } = body;
+
+    // Log the data being sent to help debug
+    console.log('Creating task with data:', {
+      title,
+      status,
+      order,
+      isStuck,
+      milestoneId,
+      createdAt: createdAt ? new Date(createdAt).toISOString() : undefined,
+      updatedAt: updatedAt ? new Date(updatedAt).toISOString() : undefined,
+    });
+
+    // Ensure order is a valid integer within INT4 range (-2147483648 to 2147483647)
+    const safeOrder = order !== undefined && order !== null 
+      ? Math.max(-2147483648, Math.min(2147483647, parseInt(String(order), 10))) 
+      : 0;
 
     const task = await prisma.task.create({
       data: {
@@ -31,7 +58,13 @@ export async function POST(request: NextRequest) {
         description,
         status: status || 'todo',
         milestoneId,
-        order: 0,
+        order: safeOrder,
+        isStuck: isStuck ?? false,
+        stuckContent: stuckContent || undefined,
+        stuckSolution: stuckSolution || undefined,
+        // Convert date strings to Date objects if provided
+        createdAt: createdAt ? new Date(createdAt) : undefined,
+        updatedAt: updatedAt ? new Date(updatedAt) : undefined,
       },
     });
 

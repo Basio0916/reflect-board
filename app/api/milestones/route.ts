@@ -25,13 +25,16 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { title, description, color } = body;
+    const { title, description, color, createdAt, updatedAt } = body;
 
     const milestone = await prisma.milestone.create({
       data: {
         title,
         description,
         color,
+        // Convert date strings to Date objects if provided
+        createdAt: createdAt ? new Date(createdAt) : undefined,
+        updatedAt: updatedAt ? new Date(updatedAt) : undefined,
       },
     });
 
