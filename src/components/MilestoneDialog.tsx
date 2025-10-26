@@ -111,7 +111,7 @@ export function MilestoneDialog({ open, onOpenChange }: MilestoneDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+      <DialogContent className="max-w-2xl w-full max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>マイルストーン管理</DialogTitle>
         </DialogHeader>
@@ -198,23 +198,23 @@ export function MilestoneDialog({ open, onOpenChange }: MilestoneDialogProps) {
                   {milestones.map((milestone) => (
                     <div
                       key={milestone.id}
-                      className="flex items-center justify-between p-3 bg-card border border-border rounded-lg hover:bg-accent/5 transition-colors"
+                      className="flex items-start justify-between p-3 bg-card border border-border rounded-lg hover:bg-accent/5 transition-colors gap-3"
                     >
-                      <div className="flex items-center gap-3 min-w-0 flex-1">
+                      <div className="flex items-start gap-3 min-w-0 flex-1">
                         <div
-                          className="w-3 h-3 rounded-full flex-shrink-0"
+                          className="w-3 h-3 rounded-full flex-shrink-0 mt-1"
                           style={{ backgroundColor: milestone.color }}
                         />
                         <div className="min-w-0 flex-1">
-                          <h4 className="font-medium text-sm truncate">{milestone.title}</h4>
+                          <h4 className="font-medium text-sm break-words">{milestone.title}</h4>
                           {milestone.description && (
-                            <p className="text-xs text-muted-foreground truncate mt-1">
+                            <p className="text-xs text-muted-foreground break-words mt-1 whitespace-pre-wrap">
                               {milestone.description}
                             </p>
                           )}
                         </div>
                       </div>
-                      <div className="flex items-center gap-1 flex-shrink-0 ml-2">
+                      <div className="flex items-center gap-1 flex-shrink-0">
                         <Button
                           variant="ghost"
                           size="sm"
